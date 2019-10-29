@@ -1,3 +1,11 @@
+<?php
+// Turn on GPIO pin 3
+echo shell_exec('/home/pi/a.out writepin '.$_POST["pinno"].' '.$_POST['taskOption']);
+?>
+<?php
+// Turn on GPIO pin 3
+echo shell_exec('/home/pi/a.out writepin '.$_POST["pinno"].' '.$_POST['taskOption']);
+?>
 /*
  ============================================================================
  Name        : piiotest.c
