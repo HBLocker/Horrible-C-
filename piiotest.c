@@ -13,7 +13,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-
 #include"piio.h"
 
 /*
@@ -95,7 +94,7 @@ int main(int argc, char *argv[]) {
 			ret = ioctl(fd,IOCTL_PIIO_GPIO_READ,&apin);
 
 }
-
+// a.out writepin 23 1
 		if (!strncmp(argv[1], "writepin", 9)) {
 			/*  Pass GPIO struct with IO control */
 			memset(&apin , 0, sizeof(apin));
@@ -105,6 +104,31 @@ int main(int argc, char *argv[]) {
 			/* Pass 'apin' struct to 'fd' with IO control*/
 			printf("WRITE:Requested pin:%i - val:%i - desc:%s\n" , apin.pin , apin.value, apin.desc);
 			ret = ioctl(fd,IOCTL_PIIO_GPIO_WRITE,&apin);
+		}
+// a.out toggle 23 1 5 500000
+if (!strncmp(argv[1], "toggle", 9)) {
+			/*  Pass GPIO struct with IO control */
+			memset(&apin , 0, sizeof(apin));
+			strcpy(apin.desc, "Details");
+			apin.pin =  strtol (argv[2],NULL,10); //pin number 
+			apin.value =  strtol (argv[3],NULL,10); //so thir part in stuct
+			/* Pass 'apin' struct to 'fd' with IO control*/
+				int i;
+			for (i=0;i<strtol (argv[4], NULL,10); i++)
+			{
+			if(apin.value==0){
+			apin.value =1;
+			}
+			else 	
+			{
+			apin.value =0; 
+			}
+			
+
+			printf("WRITE:Requested pin:%i - val:%i - desc:%s\n" , apin.pin , apin.value, apin.desc);
+			ret = ioctl(fd,IOCTL_PIIO_GPIO_WRITE,&apin);
+			usleep (strtol (argv[5],NULL,10));  //sleeps 
+			}; 
 		}
 
 
